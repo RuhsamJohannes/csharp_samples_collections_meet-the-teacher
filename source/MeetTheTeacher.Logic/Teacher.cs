@@ -9,7 +9,7 @@ namespace MeetTheTeacher.Logic
     /// Verwaltet einen Eintrag in der Sprechstundentabelle
     /// Basisklasse für TeacherWithDetail
     /// </summary>
-    public class Teacher : IComparable<Teacher>
+    public class Teacher : IComparable
     {
         private string _name;
         private string _weekday;
@@ -27,15 +27,39 @@ namespace MeetTheTeacher.Logic
         }
 
         public string Name { get => _name; }
+        public string Weekday { get => _weekday; }
+        public string Time { get => _time; }
+        public string Room { get => _room; }
 
         public virtual string GetHtmlForName()
         {
             return Name;
         }
-
-        int IComparable<Teacher>.CompareTo(Teacher other)
+        public virtual string GetHtmlForWeekday()
         {
-            throw new NotImplementedException();
+            return Weekday;
+        }
+        public virtual string GetHtmlForTime()
+        {
+            return Time;
+        }
+        public virtual string GetHtmlForRoom()
+        {
+            return Room;
+        }
+
+        public string GetHtmlForTeacher()
+        {
+            return $"<td align=\"left\">{GetHtmlForName()}</td>\n" +
+                   $"<td align=\"left\">{GetHtmlForWeekday()}</td>\n" +
+                   $"<td align=\"left\">{GetHtmlForTime()}</td>\n" +
+                   $"<td align=\"left\">{GetHtmlForRoom()}</td>\n";
+        }
+
+        public int CompareTo(object obj)
+        {
+            Teacher other = (Teacher)obj;
+            return this.Name.CompareTo(other.Name);
         }
     }
 }

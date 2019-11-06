@@ -43,7 +43,15 @@ namespace MeetTheTeacher.Logic
             {
                 string[] lineSplit = line.Split(";");
 
-                _teachers.Add(new Teacher(lineSplit[0], lineSplit[1], lineSplit[3], lineSplit[4], lineSplit[5] + lineSplit[6] + lineSplit[7]));
+                if(_details.TryGetValue(lineSplit[0], out int id))
+                {
+                    _teachers.Add(new TeacherWithDetail(lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], lineSplit[4], id));
+                }
+                else
+                {
+                    _teachers.Add(new Teacher(lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], lineSplit[4]));
+
+                }
             }
         }
 
