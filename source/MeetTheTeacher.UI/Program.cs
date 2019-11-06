@@ -28,10 +28,10 @@ namespace MeetTheTeacher.UI
 
             Controller ctrl = new Controller(teacherLines, detailLines);
 
-            throw new NotImplementedException("Ausgabe lt. Angabe (siehe Screenshots) implementieren!");
+            //("Ausgabe lt. Angabe (siehe Screenshots) implementieren!");
 
             string html = ctrl.GetHtmlTable();
-            File.WriteAllText(Path.Combine(pathToOutputFiles, resultFileName), html, Encoding.Default);
+            File.WriteAllText(Path.Combine(pathToOutputFiles, resultFileName), html, Encoding.UTF8);
         }
     }
 }

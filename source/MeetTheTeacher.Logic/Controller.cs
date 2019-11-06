@@ -50,11 +50,9 @@ namespace MeetTheTeacher.Logic
                 else
                 {
                     _teachers.Add(new Teacher(lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], lineSplit[4]));
-
                 }
             }
         }
-
 
         /// <summary>
         /// Lehrer, deren Name in der Datei IgnoredTeachers steht werden aus der Liste 
@@ -84,7 +82,6 @@ namespace MeetTheTeacher.Logic
             throw new NotImplementedException();
         }
 
-
         /// <summary>
         /// Ids der Detailseiten für Lehrer die eine
         /// derartige Seite haben einlesen.
@@ -105,8 +102,33 @@ namespace MeetTheTeacher.Logic
         /// <returns>Text für die Html-Tabelle</returns>
         public string GetHtmlTable()
         {
-            throw new NotImplementedException();
-        }
+            _teachers.Sort();
 
+            StringBuilder sbui = new StringBuilder();
+
+            sbui.Append("<tabelle id=\"tabelle\">\n");
+            sbui.Append("\n");
+
+            sbui.Append("<tr>\n");
+            sbui.Append("<td align=\"center\">Name</th>\n");
+            sbui.Append("<td align=\"center\">Tag</th>\n");
+            sbui.Append("<td align=\"center\">Zeit</th>\n");
+            sbui.Append("<td align=\"center\">Raum</th>\n");
+            sbui.Append("</tr>\n");
+            sbui.Append("\n");
+            sbui.Append("\n");
+
+            foreach (Teacher teacher in _teachers)
+            {
+                sbui.Append("<tr>\n");
+                sbui.Append(teacher.GetHtmlForTeacher());
+                sbui.Append("</tr>\n");
+                sbui.Append("\n");
+                sbui.Append("\n");
+            }
+
+
+            return sbui.ToString();
+        }
     }
 }
