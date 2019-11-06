@@ -7,27 +7,29 @@ namespace MeetTheTeacher.Logic
     /// <summary>
     /// Verwaltung der Lehrer (mit und ohne Detailinfos)
     /// </summary>
-    public class Controller
+    public class Controller 
     {
-        private readonly List<Teacher> _teachers;
-        private readonly Dictionary<string, int> _details;
+        private readonly List<Teacher> _teachers = new List<Teacher>();
+        private readonly Dictionary<string, int> _details = new Dictionary<string, int>();
 
         /// <summary>
         /// Liste für Sprechstunden und Dictionary für Detailseiten anlegen
         /// </summary>
         public Controller(string[] teacherLines, string[] detailsLines)
         {
+            InitTeachers(teacherLines);
+            InitDetails(detailsLines);
         }
 
-        public int Count => throw new NotImplementedException();
+        public int Count => _teachers.Count;
 
-        public int CountTeachersWithoutDetails => throw new NotImplementedException();
+        public int CountTeachersWithoutDetails => Count - CountTeachersWithDetails;
 
 
         /// <summary>
         /// Anzahl der Lehrer mit Detailinfos in der Liste
         /// </summary>
-        public int CountTeachersWithDetails => throw new NotImplementedException();
+        public int CountTeachersWithDetails => _details.Count;
 
         /// <summary>
         /// Aus dem Text der Sprechstundendatei werden alle Lehrersprechstunden 
@@ -37,7 +39,12 @@ namespace MeetTheTeacher.Logic
         /// <returns>Anzahl der eingelesenen Lehrer</returns>
         private void InitTeachers(string[] lines)
         {
-            throw new NotImplementedException();
+            foreach (string line in lines)
+            {
+                string[] lineSplit = line.Split(";");
+
+                _teachers.Add(new Teacher(lineSplit[0], lineSplit[1], lineSplit[3], lineSplit[4], lineSplit[5] + lineSplit[6] + lineSplit[7]));
+            }
         }
 
 
@@ -47,7 +54,16 @@ namespace MeetTheTeacher.Logic
         /// </summary>
         public void DeleteIgnoredTeachers(string[] names)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _teachers.Count; i++)
+            {
+                foreach (string name in names)
+                {
+                    if (string.Equals(name, _teachers[i].Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        _teachers.RemoveAt(i);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -67,7 +83,12 @@ namespace MeetTheTeacher.Logic
         /// </summary>
         private void InitDetails(string[] lines)
         {
-            throw new NotImplementedException();
+            foreach (string line in lines)
+            {
+                string[] lineSplit = line.Split(";");
+
+                _details.Add(lineSplit[0], Convert.ToInt32(lineSplit[1]));
+            }
         }
 
         /// <summary>
